@@ -1,6 +1,20 @@
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/XGDElements/xgd-table-of-contents)
+
 # \<xgd-table-of-contents\>
 
 Provides a Polymer 2 table of contents for use in a document library or other such use.
+
+### Styling
+
+The following custom properties and mixins are available for styling.
+
+| Custom property | Description | Default |
+| --- | --- | --- |
+| `--toc-font-size` | Font size for the menus | 1em |
+| `--app-primary-color` | Primary Color of your App | #000 |
+| `--app-dark-primary-color` | Dark Version Primary Color of your App | #000 |
+| `--app-lite-primary-color` | Light Version Primary Color of your App. | #fff |
+
 
 Example:
 ```html
@@ -56,15 +70,3 @@ Example:
     this.$.toc.LoadTableOfContents(data);
 </script>
 ```
-
-### Styling
-
-The following custom properties and mixins are available for styling.
-
-| Custom property | Description | Default |
-| --- | --- | --- |
-| `--toc-font-size` | Font size for the menus | 1em |
-| `--app-primary-color` | Primary Color of your App | #000 |
-| `--app-dark-primary-color` | Dark Version Primary Color of your App | #000 |
-| `--app-lite-primary-color` | Light Version Primary Color of your App. | #fff |
-

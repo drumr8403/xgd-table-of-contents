@@ -80,17 +80,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           }
         };
       }
-  /**
-   * Fired when a user selects a page.
-   * @event xgd-page-selection
-   * @param {Event} event 
-   *
-   * The structure of the event is as follows:
-   * @param {Object} detail {
-   *      @param {String} Title The title of the page
-   *      @param {String} Link Link to the page.
-   * }
-   */
+      /**
+       * Fired when a user selects a page.
+       * @event xgd-page-selection
+       * @param {Event} event 
+       *
+       * The structure of the event is as follows:
+       * @param {Object} detail {
+       *      @param {String} Title The title of the page
+       *      @param {String} Link Link to the page.
+       * }
+       */
 
       constructor() {
         super();
@@ -114,7 +114,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       */
       _searchTable(term) {
         for (var x = 0; x < this._tableOfContents.length; x++) {
-          this._tableOfContents[x].HandleSearch(term, true);
+          if (this._tableOfContents[x].HandleSearch) {
+            this._tableOfContents[x].HandleSearch(term, true);
+          }
         }
       }
 
@@ -124,7 +126,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       */
       SelectPage(pagelink) {
         for (var x = 0; x < this._tableOfContents.length; x++) {
-          this._tableOfContents[x].SelectLink(pagelink, true);
+          if (this._tableOfContents[x].SelectLink) {
+            this._tableOfContents[x].SelectLink(pagelink, true);
+          }
         }
       }
 
@@ -134,7 +138,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       */
       SelectChapter(title) {
         for (var x = 0; x < this._tableOfContents.length; x++) {
-          this._tableOfContents[x].SelectChapter(title, true);
+          if (this._tableOfContents[x].SelectChapter) {
+            this._tableOfContents[x].SelectChapter(title, true);
+          }
         }
       }
 
@@ -153,7 +159,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       */
       _toggleMenu(open) {
         for (var x = 0; x < this._tableOfContents.length; x++) {
-          this._tableOfContents[x].ShowMenu(open, true);
+          if (this._tableOfContents[x].ShowMenu) {
+            this._tableOfContents[x].ShowMenu(open, true);
+          }
         }
       }
       /**
@@ -163,13 +171,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       LoadTableOfContents(toc) {
         this.$.toc.innerHTML = "";
         for (var x = 0; x < toc.Chapters.length; x++) {
-          var chapter = document.createElement("xgd-chapter-item");
-          chapter.closed = this.closed;
-          chapter.opened = this.opened;
-          chapter.linkicon = this.linkicon;
-          chapter.processChapter(toc.Chapters[x]);
-          this.$.toc.append(chapter);
-          this.push("_tableOfContents", chapter);
+          if (XGDChapter.exists(toc.Chapters[x].Link)) {
+            var link = document.createElement("xgd-page-item");
+            link.linkicon = this.linkicon;
+            link.processChapter(toc.Chapters[x]);
+            this.$.toc.append(link);
+            this.push("_tableOfContents", link);
+          } else {
+            var chapter = document.createElement("xgd-chapter-item");
+            chapter.closed = this.closed;
+            chapter.opened = this.opened;
+            chapter.linkicon = this.linkicon;
+            chapter.processChapter(toc.Chapters[x]);
+            this.$.toc.append(chapter);
+            this.push("_tableOfContents", chapter);
+          }
         }
         Polymer.RenderStatus.afterNextRender(this, function () {
           this._toggleMenu(false);
