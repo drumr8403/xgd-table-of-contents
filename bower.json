@@ -1,10 +1,11 @@
 {
   "name": "xgd-table-of-contents",
-  "version": "1.0.1",
-  "private": true,  
+  "version": "1.0.2",
+  "private": true,
   "description": "Polymer 2 element that provides a table of contents for use in a document library or other such use.",
   "authors": [
-    "XGDFalcon LLC", "xgdfalcon@gmail.com"
+    "XGDFalcon LLC",
+    "xgdfalcon@gmail.com"
   ],
   "keywords": [
     "web-components",
@@ -20,7 +21,9 @@
     "iron-flex-layout": "^2.0.1",
     "iron-collapse": "^2.0.0",
     "paper-toggle-button": "^2.0.0",
-    "paper-input": "^2.0.5"
+    "paper-input": "^2.0.5",
+    "paper-tooltip": "^2.0.1",
+    "neon-animation": "^2.0.2"
   },
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
