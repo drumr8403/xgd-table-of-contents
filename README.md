@@ -3,8 +3,7 @@
 Provides a Polymer 2 table of contents for use in a document library or other such use.
 
 Example:
-<!---
-```
+```html
 <xgd-table-of-contents id="toc"
     linkicon="icons:chevron-right" 
     opened="icons:expand-more" 
@@ -57,7 +56,6 @@ Example:
     this.$.toc.LoadTableOfContents(data);
 </script>
 ```
--->
 
 ### Styling
 
