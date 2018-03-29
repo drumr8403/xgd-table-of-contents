@@ -1,13 +1,14 @@
 {
   "name": "xgd-table-of-contents",
-  "version": "1.0.2",
-  "private": true,
+  "version": "1.0.3",
+  "private": false,
   "description": "Polymer 2 element that provides a table of contents for use in a document library or other such use.",
   "authors": [
     "XGDFalcon LLC",
     "xgdfalcon@gmail.com"
   ],
   "keywords": [
+    "element-collection",
     "web-components",
     "polymer",
     "menu"
