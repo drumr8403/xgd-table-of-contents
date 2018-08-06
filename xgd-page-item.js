@@ -152,4 +152,4 @@ class XGDPageItem extends PolymerElement {
   }
 }
 
-window.customElements.define(XGDPageItem.is, XGDPageItem);
+window.customElements.define('xgd-page-item', XGDPageItem);

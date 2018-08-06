@@ -136,7 +136,7 @@ class XGDChapterItem extends PolymerElement {
       // search children
       for (var x = 0; x < this.sections.length; x++) {
         var section = this.sections[x];
-        if (section.tagName.toUpperCase() === XGDPageItem.is.toUpperCase()) {
+        if (section.tagName.toUpperCase() === "XGD-PAGE-ITEM") {
           section.HandleSearch(term);
         }
       }

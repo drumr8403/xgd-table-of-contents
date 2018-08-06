@@ -33,6 +33,7 @@ export class XGDChapter {
     /** Compare this object with a specific term */
     Compare(term) {
       if (XGDChapter.exists(this.Link)) {
+        console.log(term);
         return this.Title.toUpperCase().indexOf(term.toUpperCase()) !== -1;
       } else {
         return true;
