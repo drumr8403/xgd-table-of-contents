@@ -171,27 +171,29 @@ class XGDTableOfContents extends PolymerElement {
   * @param {Array}(XGDChapter) toc
   */
   LoadTableOfContents(toc) {
-    this.$.toc.innerHTML = "";
-    for (var x = 0; x < toc.Chapters.length; x++) {
-      if (XGDChapter.exists(toc.Chapters[x].Link)) {
-        var link = document.createElement("xgd-page-item");
-        link.linkicon = this.linkicon;
-        link.processChapter(toc.Chapters[x]);
-        this.$.toc.append(link);
-        this.push("_tableOfContents", link);
-      } else {
-        var chapter = document.createElement("xgd-chapter-item");
-        chapter.closed = this.closed;
-        chapter.opened = this.opened;
-        chapter.linkicon = this.linkicon;
-        chapter.processChapter(toc.Chapters[x]);
-        this.$.toc.append(chapter);
-        this.push("_tableOfContents", chapter);
+    if (toc !== null && typeof(toc) !== 'undefined' && typeof(toc.Chapters) !== 'undefined') {
+      this.$.toc.innerHTML = "";
+      for (var x = 0; x < toc.Chapters.length; x++) {
+        if (XGDChapter.exists(toc.Chapters[x].Link)) {
+          var link = document.createElement("xgd-page-item");
+          link.linkicon = this.linkicon;
+          link.processChapter(toc.Chapters[x]);
+          this.$.toc.append(link);
+          this.push("_tableOfContents", link);
+        } else {
+          var chapter = document.createElement("xgd-chapter-item");
+          chapter.closed = this.closed;
+          chapter.opened = this.opened;
+          chapter.linkicon = this.linkicon;
+          chapter.processChapter(toc.Chapters[x]);
+          this.$.toc.append(chapter);
+          this.push("_tableOfContents", chapter);
+        }
       }
+      afterNextRender(this, function () {
+        this._toggleMenu(false);
+      });
     }
-    afterNextRender(this, function () {
-      this._toggleMenu(false);
-    });
   }
 }
 
