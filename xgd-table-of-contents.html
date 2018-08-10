@@ -60,8 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             observer: "_searchTable"
           },
           _tableOfContents: {
-            type: Array,
-            value: []
+            type: Object
           },
           /** Icon for closed folder */
           closed: {
@@ -166,30 +165,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       /**
       * Set the Table Of Contents Data.
-      * @param {Array}(XGDChapter) toc
+      * @param {Object}(XGDChapter) toc
       */
       LoadTableOfContents(toc) {
-        this.$.toc.innerHTML = "";
-        for (var x = 0; x < toc.Chapters.length; x++) {
-          if (XGDChapter.exists(toc.Chapters[x].Link)) {
-            var link = document.createElement("xgd-page-item");
-            link.linkicon = this.linkicon;
-            link.processChapter(toc.Chapters[x]);
-            this.$.toc.append(link);
-            this.push("_tableOfContents", link);
-          } else {
-            var chapter = document.createElement("xgd-chapter-item");
-            chapter.closed = this.closed;
-            chapter.opened = this.opened;
-            chapter.linkicon = this.linkicon;
-            chapter.processChapter(toc.Chapters[x]);
-            this.$.toc.append(chapter);
-            this.push("_tableOfContents", chapter);
+        if (typeof(toc) !== "undefined" && typeof(toc.Chapters) !== "undefined")
+        {
+          this.$.toc.innerHTML = "";
+          for (var x = 0; x < toc.Chapters.length; x++) {
+            if (XGDChapter.exists(toc.Chapters[x].Link)) {
+              var link = document.createElement("xgd-page-item");
+              link.linkicon = this.linkicon;
+              link.processChapter(toc.Chapters[x]);
+              this.$.toc.append(link);
+              this.push("_tableOfContents", link);
+            } else {
+              var chapter = document.createElement("xgd-chapter-item");
+              chapter.closed = this.closed;
+              chapter.opened = this.opened;
+              chapter.linkicon = this.linkicon;
+              chapter.processChapter(toc.Chapters[x]);
+              this.$.toc.append(chapter);
+              this.push("_tableOfContents", chapter);
+            }
           }
+          Polymer.RenderStatus.afterNextRender(this, function () {
+            this._toggleMenu(false);
+          });
         }
-        Polymer.RenderStatus.afterNextRender(this, function () {
-          this._toggleMenu(false);
-        });
       }
 
     }
