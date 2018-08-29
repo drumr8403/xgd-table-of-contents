@@ -85,9 +85,7 @@ class XGDChapterItem extends PolymerElement {
       <span id="chaptername" class="title">[[chapter.Title]]</span>
     </div>
     <paper-tooltip animation-delay="200" for="chaptername" position="top">[[chapter.Title]]</paper-tooltip>
-    <div id="submenu">
-      <span>LOADING...</span>
-    </div>
+    <div id="submenu"></div>
 `;
   }
 
@@ -231,6 +229,24 @@ class XGDChapterItem extends PolymerElement {
     if (XGDChapter.exists(this.$.submenu)) {
       if (this._hidden) {
         this.$.submenu.style.display = 'table-cell';
+        this.$.submenu.innerHTML = "";
+        for (var x = 0; x < this.chapter.Chapters.length; x++) {
+          if (XGDChapter.exists(this.chapter.Chapters[x].Link)) {
+            var link = document.createElement("xgd-page-item");
+            link.linkicon = this.linkicon;
+            link.processChapter(this.chapter.Chapters[x], true);
+            this.$.submenu.appendChild(link);
+            this.push('sections', link);
+          } else {
+            var menu = document.createElement("xgd-chapter-item");
+            menu.closed = this.closed;
+            menu.opened = this.opened;
+            menu.linkicon = this.linkicon;
+            menu.processChapter(this.chapter.Chapters[x], true);
+            this.$.submenu.appendChild(menu);
+            this.push('sections', menu);
+          }
+        }
       } else {
         this.$.submenu.style.display = 'none';
       }
@@ -244,28 +260,6 @@ class XGDChapterItem extends PolymerElement {
   */
   processChapter(chapter, toplevel) {
     this.chapter = new XGDChapter(chapter);
-    if (XGDChapter.exists(chapter.Chapters)) {
-      afterNextRender(this, function () {
-        this.$.submenu.innerHTML = "";
-        for (var x = 0; x < chapter.Chapters.length; x++) {
-          if (XGDChapter.exists(chapter.Chapters[x].Link)) {
-            var link = document.createElement("xgd-page-item");
-            link.linkicon = this.linkicon;
-            link.processChapter(chapter.Chapters[x], true);
-            this.$.submenu.appendChild(link);
-            this.push('sections', link);
-          } else {
-            var menu = document.createElement("xgd-chapter-item");
-            menu.closed = this.closed;
-            menu.opened = this.opened;
-            menu.linkicon = this.linkicon;
-            menu.processChapter(chapter.Chapters[x], true);
-            this.$.submenu.appendChild(menu);
-            this.push('sections', menu);
-          }
-        }
-      });
-    }
   }
 }
 
