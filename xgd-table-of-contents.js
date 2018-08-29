@@ -82,6 +82,19 @@ class XGDTableOfContents extends PolymerElement {
       }
     };
   }
+
+  /**
+   * Recursively searches for a link and opens all parent chapters.
+   * @param {String} Link Link to search for.
+   */
+  findLink(Link) {
+    for(const item of this._tableOfContents) {
+      if(!item.chapter.Link) {
+        XGDChapter.findLink(item.chapter, Link, [item.chapter]);
+      }
+    }
+  }
+
   /**
    * Fired when a user selects a page.
    * @event xgd-page-selection
@@ -89,7 +102,6 @@ class XGDTableOfContents extends PolymerElement {
    *
    * The structure of the event is as follows:
    * @param {Object} detail {
-   *      @param {String} Title The title of the page
    *      @param {String} Link Link to the page.
    * }
    */
@@ -98,6 +110,7 @@ class XGDTableOfContents extends PolymerElement {
     super();
     afterNextRender(this, function () {
       window.addEventListener("xgd-page-selection", function (event) {
+        this.findLink(event.detail.Link);
         this.SelectPage(event.detail.Link);
       }.bind(this));
     });
@@ -190,9 +203,6 @@ class XGDTableOfContents extends PolymerElement {
           this.push("_tableOfContents", chapter);
         }
       }
-      afterNextRender(this, function () {
-        this._toggleMenu(false);
-      });
     }
   }
 }

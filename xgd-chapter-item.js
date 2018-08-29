@@ -259,6 +259,7 @@ class XGDChapterItem extends PolymerElement {
   * @param {XGDChapter} chapter
   */
   processChapter(chapter, toplevel) {
+    chapter.Element = this;
     this.chapter = new XGDChapter(chapter);
   }
 }
