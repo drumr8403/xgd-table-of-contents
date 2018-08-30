@@ -113,9 +113,10 @@ class XGDPageItem extends PolymerElement {
   SelectLink(link) {
     if (link === this.chapter.Link) {
       this.$.content.className = "selected";
-      if (this.parentNode.parentNode.host) {
+      if (this.parentNode && this.parentNode.parentNode.host) {
         this.parentNode.parentNode.host._openParent();
       }
+      this.scrollIntoView();
     } else {
       this.$.content.className = "";
     }

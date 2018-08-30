@@ -140,8 +140,10 @@ class XGDTableOfContents extends PolymerElement {
   * @param {String} pagelink
   */
   SelectPage(pagelink) {
+    console.log('Inside SelectPage');
     for (var x = 0; x < this._tableOfContents.length; x++) {
       if (this._tableOfContents[x].SelectLink) {
+        console.log('Inside if(...SelectLink');
         this._tableOfContents[x].SelectLink(pagelink, true);
       }
     }
@@ -186,19 +188,22 @@ class XGDTableOfContents extends PolymerElement {
   LoadTableOfContents(toc) {
     if (toc !== null && typeof(toc) !== 'undefined' && typeof(toc.Chapters) !== 'undefined') {
       this.$.toc.innerHTML = "";
-      for (var x = 0; x < toc.Chapters.length; x++) {
-        if (XGDChapter.exists(toc.Chapters[x].Link)) {
+      for (var i = 0; i < toc.Chapters.length; i++) {
+        if (XGDChapter.exists(toc.Chapters[i].Link)) {
           var link = document.createElement("xgd-page-item");
           link.linkicon = this.linkicon;
-          link.processChapter(toc.Chapters[x]);
+          link.processChapter(toc.Chapters[i]);
           this.$.toc.append(link);
           this.push("_tableOfContents", link);
+          if(i === 0 && link.SelectLink) {
+            link.SelectLink(link.chapter.Link);
+          }
         } else {
           var chapter = document.createElement("xgd-chapter-item");
           chapter.closed = this.closed;
           chapter.opened = this.opened;
           chapter.linkicon = this.linkicon;
-          chapter.processChapter(toc.Chapters[x]);
+          chapter.processChapter(toc.Chapters[i]);
           this.$.toc.append(chapter);
           this.push("_tableOfContents", chapter);
         }
